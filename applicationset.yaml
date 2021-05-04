@@ -1,0 +1,28 @@
+# https://www.openshift.com/blog/getting-started-with-applicationsets
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: oai-demo-apps
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/larsks/oai-demo-apps
+        revision: master
+        directories:
+          - path: env/*
+  template:
+    metadata:
+      name: '{{path.basename}}'
+    spec:
+      project: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+      source:
+        repoURL: https://github.com/larsks/oai-demo-apps
+        targetRevision: master
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: openshift-gitops
