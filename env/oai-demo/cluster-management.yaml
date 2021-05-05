@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: oai-cluster-management
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: openshift-gitops
+  project: default
+  source:
+    repoURL: https://github.com/larsks/oai-cluster-management.git
+    targetRevision: master
+    path: cluster-scope/overlay/oai-demo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
