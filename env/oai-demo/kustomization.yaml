@@ -5,3 +5,4 @@ namespace: openshift-gitops
 resources:
   - cluster-management.yaml
   - oai-demo-webserver.yaml
+  - moc-nfs-democratic-csi.yaml
